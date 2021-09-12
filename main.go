@@ -22,6 +22,11 @@ func main() {
 		logrus.SetLevel(logrus.DebugLevel)
 	}
 
+	var removeAll bool
+	if len(flag.Args()) != 0 && flag.Args()[len(flag.Args())-1] == "all" {
+		removeAll = true
+	}
+
 	dirs, err := os.ReadDir("./")
 	if err != nil {
 		logrus.Fatalln(err.Error())
@@ -72,7 +77,7 @@ func main() {
 			}
 			return true
 		})
-		if needRemove {
+		if needRemove || removeAll {
 			removes.Add(value1)
 		}
 		return true
